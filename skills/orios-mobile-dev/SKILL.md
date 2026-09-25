@@ -173,3 +173,5 @@ When preparing Android builds, follow the battle-tested automation extracted fro
 3. **Always Plan for Offline:** Every query to Supabase should cache its response locally. When the device has no network, render from cache immediately rather than showing a fatal network error.
 4. **Preserve Design Language:** Use the exact subject colors and tokens defined in `../Orios-Class-Portal-V2/lib/subjects.js`.
 5. **Interactive Feedback:** Always provide tactile visual feedback (`Pressable` with opacity / scale states) and loading indicators for network/download operations.
+6. **Feature Commit Protocol:** Create a git commit with a clear, conventional commit message (`feat(...)`, `fix(...)`, `chore(...)`) immediately after completing each feature or milestone. Never leave large uncommitted chunks across multiple features.
+7. **Local ADB Validation:** Test each completed feature on the connected device via `./deploy.sh` (or `adb install -r`) before moving to the next feature.
