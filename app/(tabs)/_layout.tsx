@@ -2,8 +2,12 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { Calendar, BookOpen, CheckSquare, MoreHorizontal } from 'lucide-react-native';
 import { Platform } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
+  const insets = useSafeAreaInsets();
+  const bottomInset = Math.max(insets.bottom, Platform.OS === 'android' ? 8 : 16);
+
   return (
     <Tabs
       screenOptions={{
@@ -14,9 +18,9 @@ export default function TabLayout() {
           backgroundColor: '#09090b',
           borderTopColor: '#27272a',
           borderTopWidth: 1,
-          height: Platform.OS === 'android' ? 62 : 84,
-          paddingBottom: Platform.OS === 'android' ? 10 : 28,
-          paddingTop: 8,
+          height: 56 + bottomInset,
+          paddingBottom: bottomInset,
+          paddingTop: 6,
         },
         tabBarLabelStyle: {
           fontSize: 11,

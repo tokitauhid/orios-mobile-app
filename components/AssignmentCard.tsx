@@ -21,17 +21,21 @@ export const AssignmentCard: React.FC<AssignmentCardProps> = ({
   const isSubmitted = assignment.status === 'submitted';
   const isOverdue = !isSubmitted && diffHours < 0;
 
-  let badgeColor = 'bg-zinc-800 border-zinc-700 text-zinc-300';
+  let badgeBg = 'bg-zinc-800 border-zinc-700';
+  let badgeTextColor = 'text-zinc-300';
   let badgeText = `${diffDays} days left`;
 
   if (isSubmitted) {
-    badgeColor = 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
+    badgeBg = 'bg-emerald-500/10 border-emerald-500/30';
+    badgeTextColor = 'text-emerald-400';
     badgeText = 'Submitted';
   } else if (isOverdue) {
-    badgeColor = 'bg-rose-500/10 border-rose-500/30 text-rose-400';
+    badgeBg = 'bg-rose-500/10 border-rose-500/30';
+    badgeTextColor = 'text-rose-400';
     badgeText = 'Overdue';
   } else if (diffHours < 24) {
-    badgeColor = 'bg-amber-500/10 border-amber-500/30 text-amber-400';
+    badgeBg = 'bg-amber-500/10 border-amber-500/30';
+    badgeTextColor = 'text-amber-400';
     badgeText = `Due in ${Math.max(1, diffHours)}h`;
   }
 
@@ -52,8 +56,8 @@ export const AssignmentCard: React.FC<AssignmentCardProps> = ({
           size="sm"
         />
 
-        <View className={`px-2.5 py-0.5 rounded-full border ${badgeColor}`}>
-          <Text className="text-[11px] font-bold">{badgeText}</Text>
+        <View className={`px-2.5 py-0.5 rounded-full border ${badgeBg}`}>
+          <Text className={`text-[11px] font-bold ${badgeTextColor}`}>{badgeText}</Text>
         </View>
       </View>
 
