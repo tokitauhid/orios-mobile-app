@@ -57,7 +57,11 @@ if command -v adb >/dev/null 2>&1; then
       echo "🚀 Launching Orios Mobile on $DEV..."
       adb -s "$DEV" shell monkey -p com.orios.app -c android.intent.category.LAUNCHER 1 >/dev/null 2>&1 || true
     else
-      echo "❌ Failed to install on $DEV via ADB."
+      echo "⚠️  Direct ADB install restricted by device (common on Xiaomi/MIUI/HyperOS)."
+      echo "📲 Copying APK directly to phone Downloads folder..."
+      adb -s "$DEV" push "$APK_PATH" /sdcard/Download/orios-debug.apk
+      echo "✅ APK copied to: /sdcard/Download/orios-debug.apk"
+      echo "👉 Open the Downloads / File Manager app on your phone and tap 'orios-debug.apk' to install."
     fi
   done
 else
