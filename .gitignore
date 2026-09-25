@@ -69,3 +69,4 @@ fastlane/test_output
 
 # Internal folder (excluded from git history for secrets & local context)
 /internal
+web-reference/

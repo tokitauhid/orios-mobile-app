@@ -1,6 +1,12 @@
 import React from 'react';
 import { Tabs } from 'expo-router';
-import { Calendar, BookOpen, CheckSquare, MoreHorizontal } from 'lucide-react-native';
+import {
+  Home,
+  FileText,
+  CalendarDays,
+  ClipboardList,
+  Menu,
+} from 'lucide-react-native';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -23,7 +29,7 @@ export default function TabLayout() {
           paddingTop: 6,
         },
         tabBarLabelStyle: {
-          fontSize: 11,
+          fontSize: 10,
           fontWeight: '600',
         },
       }}
@@ -31,29 +37,36 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
+          title: 'Home',
+          tabBarIcon: ({ color, size }) => <Home color={color} size={20} />,
+        }}
+      />
+      <Tabs.Screen
+        name="schedule"
+        options={{
           title: 'Schedule',
-          tabBarIcon: ({ color, size }) => <Calendar color={color} size={20} />,
+          tabBarIcon: ({ color, size }) => <CalendarDays color={color} size={20} />,
         }}
       />
       <Tabs.Screen
         name="notes"
         options={{
           title: 'Notes',
-          tabBarIcon: ({ color, size }) => <BookOpen color={color} size={20} />,
+          tabBarIcon: ({ color, size }) => <FileText color={color} size={20} />,
         }}
       />
       <Tabs.Screen
         name="assignments"
         options={{
           title: 'Deadlines',
-          tabBarIcon: ({ color, size }) => <CheckSquare color={color} size={20} />,
+          tabBarIcon: ({ color, size }) => <ClipboardList color={color} size={20} />,
         }}
       />
       <Tabs.Screen
         name="more"
         options={{
           title: 'More',
-          tabBarIcon: ({ color, size }) => <MoreHorizontal color={color} size={20} />,
+          tabBarIcon: ({ color, size }) => <Menu color={color} size={20} />,
         }}
       />
     </Tabs>

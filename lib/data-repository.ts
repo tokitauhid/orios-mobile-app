@@ -104,25 +104,57 @@ export async function getAssignments(): Promise<Assignment[]> {
   return fallback.fallbackAssignments;
 }
 
+const DEFAULT_SLOT_TIMES: Record<number, string> = {
+  0: '9:00',
+  1: '9:50',
+  2: '10:40',
+  3: '11:30',
+  4: '12:20',
+  5: '1:00',
+  6: '2:00',
+  7: '2:40',
+  8: '3:20',
+};
+
 // ─── Routine ───
 export async function getWeeklyRoutine(): Promise<RoutineSlot[]> {
   try {
-    const { data: routineData, error: routineError } = await supabase
-      .from('routine')
-      .select('*, subjects(code, name, color), teachers(name, room)')
-      .order('time_slot_index', { ascending: true });
+    const [routineRes, slotsRes] = await Promise.all([
+      supabase
+        .from('routine')
+        .select('*, subjects(code, name, color), teachers(name, room)')
+        .order('time_slot_index', { ascending: true }),
+      supabase
+        .from('time_slots')
+        .select('*')
+        .order('sort_order', { ascending: true }),
+    ]);
 
-    if (!routineError && routineData && routineData.length > 0) {
-      const slots: RoutineSlot[] = routineData.map((r: any) => ({
-        day_name: r.day_name,
-        time_slot_index: r.time_slot_index,
-        time_label: `${8 + r.time_slot_index}:00 - ${9 + r.time_slot_index}:00`,
-        subject_id: r.subject_id,
-        teacher_id: r.teacher_id,
-        teacher_name: r.teachers?.name || '',
-        room: r.room || r.teachers?.room || 'TBA',
-        type: r.type || 'lecture',
-      }));
+    const slotMap = new Map<number, string>();
+    if (slotsRes.data) {
+      slotsRes.data.forEach((s: any) => {
+        slotMap.set(s.sort_order, s.time_label?.trim());
+      });
+    }
+
+    if (!routineRes.error && routineRes.data && routineRes.data.length > 0) {
+      const slots: RoutineSlot[] = routineRes.data.map((r: any) => {
+        const timeLabel =
+          slotMap.get(r.time_slot_index) ||
+          DEFAULT_SLOT_TIMES[r.time_slot_index] ||
+          `${8 + r.time_slot_index}:00`;
+
+        return {
+          day_name: r.day_name,
+          time_slot_index: r.time_slot_index,
+          time_label: timeLabel,
+          subject_id: r.subject_id,
+          teacher_id: r.teacher_id,
+          teacher_name: r.teachers?.name || '',
+          room: r.room || r.teachers?.room || 'TBA',
+          type: r.type || 'lecture',
+        };
+      });
 
       db.saveCachedRoutine(slots);
       return slots;
