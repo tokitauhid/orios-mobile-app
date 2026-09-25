@@ -6,6 +6,20 @@ Companion to [Orios-Class-Portal-V2](https://github.com/tokitauhid/Orios-Class-P
 
 ---
 
+## 🔗 Cross-Repository Pointers
+
+This mobile application communicates with the same backend and shares design tokens with the web portal. Key local references:
+
+| Resource | Path | Description |
+|---|---|---|
+| **Web Repository** | [`../Orios-Class-Portal-V2`](file:///home/tokit/Projects/Orios-Class-Portal-V2) | Next.js 16 Web Portal root |
+| **Database Schema** | [`../Orios-Class-Portal-V2/supabase_schema.sql`](file:///home/tokit/Projects/Orios-Class-Portal-V2/supabase_schema.sql) | Full PostgreSQL schema, tables, and RLS policies |
+| **Subject Constants**| [`../Orios-Class-Portal-V2/lib/subjects.js`](file:///home/tokit/Projects/Orios-Class-Portal-V2/lib/subjects.js) | Subject codes, names, credit hours, and color palette |
+| **Mock Dataset** | [`../Orios-Class-Portal-V2/lib/mock-data.js`](file:///home/tokit/Projects/Orios-Class-Portal-V2/lib/mock-data.js) | Test fixtures and fallback data |
+| **Reference Stack** | [`./sujuds_tech_stack/`](file:///home/tokit/Projects/orios-mobile-app/sujuds_tech_stack) | Extracted Android build, keystore, and CI/CD scripts |
+
+---
+
 ## 🎯 Key Objectives
 
 1. **Native Performance:** Fast, fluid, responsive Android experience.
